@@ -54,12 +54,12 @@ void run_app(const AppConfig& cfg) {
 
     // --- Open serial port ---
     SerialPort serial;
-    if (!serial.open(cfg.device, cfg.baud_rate)) {
-        std::cerr << "[ERROR] Cannot open serial port: " << cfg.device << '\n';
+    if (!serial.open(cfg.serial)) {
+        std::cerr << "[ERROR] Cannot open serial port: " << cfg.serial.port << '\n';
         return;
     }
-    std::cout << "[INFO] Opened " << cfg.device
-              << " at " << cfg.baud_rate << " baud\n";
+    std::cout << "[INFO] Opened " << cfg.serial.port
+              << " at " << cfg.serial.baud_rate << " baud\n";
 
     // --- Open CSV writer ---
     CsvWriter csv(cfg.output_file);
