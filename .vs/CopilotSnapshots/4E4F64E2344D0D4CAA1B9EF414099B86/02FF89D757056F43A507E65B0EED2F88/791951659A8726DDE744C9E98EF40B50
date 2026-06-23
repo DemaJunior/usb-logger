@@ -1,0 +1,11 @@
+﻿#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Reconfigure and build on the remote Linux machine
+# Run from the remote source directory (e.g. ~/.vs/usb-logger)
+
+PRESET=${1:-linux-debug}
+
+cmake --preset "${PRESET}"
+cmake --build "out/build/${PRESET}" -j

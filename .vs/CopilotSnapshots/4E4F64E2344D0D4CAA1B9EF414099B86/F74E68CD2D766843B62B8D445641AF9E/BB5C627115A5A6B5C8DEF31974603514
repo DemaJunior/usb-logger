@@ -1,0 +1,37 @@
+﻿#include "line_assembler.h"
+
+#include <algorithm>
+
+LineAssembler::LineAssembler(std::size_t maxLineBytes) : max_(maxLineBytes) {
+    if (max_ == 0) max_ = 4096;
+}
+
+std::vector<std::string> LineAssembler::feed(const std::string& chunk) {
+    std::vector<std::string> lines;
+    if (chunk.empty()) return lines;
+
+    buf_.append(chunk);
+
+    const std::size_t cap = max_ + 1; // keep room for a possible '\n' delimiter
+    if (buf_.size() > cap) {
+        buf_.erase(0, buf_.size() - cap);
+    }
+
+    for (;;) {
+        auto pos = buf_.find('\n');
+        if (pos == std::string::npos) break;
+
+        std::string line = buf_.substr(0, pos);
+        buf_.erase(0, pos + 1);
+
+        if (!line.empty() && line.back() == '\r') line.pop_back();
+
+        if (line.size() > max_) {
+            line.erase(0, line.size() - max_);
+        }
+
+        lines.push_back(std::move(line));
+    }
+
+    return lines;
+}

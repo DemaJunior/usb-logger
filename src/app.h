@@ -1,0 +1,42 @@
+#pragma once
+#ifndef APP_H
+#define APP_H
+
+#include <atomic>
+
+#include "app_config.h"
+
+/**
+ * @brief Main application class that manages sensor data reading and processing.
+ */
+class app {
+public:
+    /**
+     * @brief Constructs the application with the given configuration.
+     * @param cfg Configuration settings for the application.
+     */
+    explicit app(AppConfig cfg);
+
+    /**
+     * @brief Destroys the application and releases resources.
+     */
+    ~app();
+
+    /**
+     * @brief Starts the application and runs the main loop.
+     * @return Exit status of the application.
+     */
+    int run();
+
+private:
+    /**
+     * @brief Executes the main processing loop.
+     * @return Exit status of the processing loop.
+     */
+    int runLoop();
+
+    AppConfig cfg_; ///< Configuration settings for the application
+    std::atomic_bool stop_{false}; ///< Atomic flag to control the stopping of the application
+};
+
+#endif // APP_H

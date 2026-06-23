@@ -1,0 +1,580 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\CMakePresets.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:CMakePresets.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\file_utils.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\file_utils.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\config\\app.toml||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:config\\app.toml||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\toolchains\\raspi-aarch64.cmake||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:toolchains\\raspi-aarch64.cmake||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\config_loader.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\config_loader.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\config_loader.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\config_loader.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\app.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\line_logger.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\line_logger.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\line_logger.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\line_logger.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\app_config.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app_config.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\app.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\usb-logger.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:usb-logger.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\usb-logger.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:usb-logger.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|CMake Overview Pages||{B1CAA5B0-FEB1-4350-8AB9-F895876842F2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\file_utils.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\file_utils.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\serial_port.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\serial_port.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\serial_port.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\serial_port.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\line_assembler.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\line_assembler.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\line_assembler.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\line_assembler.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\toolchains\\raspi-armhf.cmake||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:toolchains\\raspi-armhf.cmake||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\scripts\\remote-reconfigure.sh||{3B902123-F8A7-4915-9F01-361F908088D0}|",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:scripts\\remote-reconfigure.sh||{3B902123-F8A7-4915-9F01-361F908088D0}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\tests\\test_main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:tests\\test_main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\tests\\test_framework.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:tests\\test_framework.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\tests\\test_line_assembler.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:tests\\test_line_assembler.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\tests\\test_config_loader.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:tests\\test_config_loader.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\scripts\\install.sh||{3B902123-F8A7-4915-9F01-361F908088D0}|",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:scripts\\install.sh||{3B902123-F8A7-4915-9F01-361F908088D0}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\scripts\\uninstall.sh||{3B902123-F8A7-4915-9F01-361F908088D0}|",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:scripts\\uninstall.sh||{3B902123-F8A7-4915-9F01-361F908088D0}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\scripts\\make_package.sh||{3B902123-F8A7-4915-9F01-361F908088D0}|",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:scripts\\make_package.sh||{3B902123-F8A7-4915-9F01-361F908088D0}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\systemd\\usb-logger.service||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:systemd\\usb-logger.service||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\systemd\\usb-logger.service.new||{3B902123-F8A7-4915-9F01-361F908088D0}|",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:systemd\\usb-logger.service.new||{3B902123-F8A7-4915-9F01-361F908088D0}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 8,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "usb-logger.service.new",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\systemd\\usb-logger.service.new",
+              "RelativeDocumentMoniker": "systemd\\usb-logger.service.new",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\systemd\\usb-logger.service.new",
+              "RelativeToolTip": "systemd\\usb-logger.service.new",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-03-24T14:42:48.888Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "usb-logger.service",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\systemd\\usb-logger.service",
+              "RelativeDocumentMoniker": "systemd\\usb-logger.service",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\systemd\\usb-logger.service",
+              "RelativeToolTip": "systemd\\usb-logger.service",
+              "ViewState": "AgIAABMAAAAAAAAAAABBwBYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-03-24T13:57:48.622Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "make_package.sh",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\scripts\\make_package.sh",
+              "RelativeDocumentMoniker": "scripts\\make_package.sh",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\scripts\\make_package.sh",
+              "RelativeToolTip": "scripts\\make_package.sh",
+              "ViewState": "AgIAAEQAAAAAAAAAAABRwEcAAAAAAAAAAAAAAA==",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|",
+              "WhenOpened": "2026-03-24T13:57:42.936Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CMakePresets.json",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\CMakePresets.json",
+              "RelativeDocumentMoniker": "CMakePresets.json",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\CMakePresets.json",
+              "RelativeToolTip": "CMakePresets.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-03-24T13:11:44.977Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "file_utils.cpp",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\file_utils.cpp",
+              "RelativeDocumentMoniker": "src\\file_utils.cpp",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\file_utils.cpp",
+              "RelativeToolTip": "src\\file_utils.cpp",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-03-24T13:02:48.3Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "main.cpp",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\main.cpp",
+              "RelativeDocumentMoniker": "src\\main.cpp",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\main.cpp",
+              "RelativeToolTip": "src\\main.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-03-24T12:53:58.329Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "test_main.cpp",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\tests\\test_main.cpp",
+              "RelativeDocumentMoniker": "tests\\test_main.cpp",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\tests\\test_main.cpp",
+              "RelativeToolTip": "tests\\test_main.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-03-24T13:38:19.911Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "test_framework.h",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\tests\\test_framework.h",
+              "RelativeDocumentMoniker": "tests\\test_framework.h",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\tests\\test_framework.h",
+              "RelativeToolTip": "tests\\test_framework.h",
+              "ViewState": "AgIAAB0AAAAAAAAAAABBwB4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-03-24T13:38:24.213Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "test_line_assembler.cpp",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\tests\\test_line_assembler.cpp",
+              "RelativeDocumentMoniker": "tests\\test_line_assembler.cpp",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\tests\\test_line_assembler.cpp",
+              "RelativeToolTip": "tests\\test_line_assembler.cpp",
+              "ViewState": "AgIAABkAAAAAAAAAAABRwBwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-03-24T13:38:28.719Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "test_config_loader.cpp",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\tests\\test_config_loader.cpp",
+              "RelativeDocumentMoniker": "tests\\test_config_loader.cpp",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\tests\\test_config_loader.cpp",
+              "RelativeToolTip": "tests\\test_config_loader.cpp",
+              "ViewState": "AgIAAD4AAAAAAAAAAABBwD8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-03-24T13:38:36.028Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "install.sh",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\scripts\\install.sh",
+              "RelativeDocumentMoniker": "scripts\\install.sh",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\scripts\\install.sh",
+              "RelativeToolTip": "scripts\\install.sh",
+              "ViewState": "AgIAAG8AAAAAAAAAAIBJwHEAAAAAAAAAAAAAAA==",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|",
+              "WhenOpened": "2026-03-24T13:55:32.824Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "uninstall.sh",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\scripts\\uninstall.sh",
+              "RelativeDocumentMoniker": "scripts\\uninstall.sh",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\scripts\\uninstall.sh",
+              "RelativeToolTip": "scripts\\uninstall.sh",
+              "ViewState": "AgIAABQAAAAAAAAAAIBJwBYAAAAAAAAAAAAAAA==",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|",
+              "WhenOpened": "2026-03-24T13:55:36.693Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "remote-reconfigure.sh",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\scripts\\remote-reconfigure.sh",
+              "RelativeDocumentMoniker": "scripts\\remote-reconfigure.sh",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\scripts\\remote-reconfigure.sh",
+              "RelativeToolTip": "scripts\\remote-reconfigure.sh",
+              "ViewState": "AgIAAAkAAAAAAAAAAIBJwAsAAAAAAAAAAAAAAA==",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|",
+              "WhenOpened": "2026-03-24T13:30:06.188Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "raspi-armhf.cmake",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\toolchains\\raspi-armhf.cmake",
+              "RelativeDocumentMoniker": "toolchains\\raspi-armhf.cmake",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\toolchains\\raspi-armhf.cmake",
+              "RelativeToolTip": "toolchains\\raspi-armhf.cmake",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-03-24T13:11:29.655Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "raspi-aarch64.cmake",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\toolchains\\raspi-aarch64.cmake",
+              "RelativeDocumentMoniker": "toolchains\\raspi-aarch64.cmake",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\toolchains\\raspi-aarch64.cmake",
+              "RelativeToolTip": "toolchains\\raspi-aarch64.cmake",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-03-24T13:11:25.499Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "line_logger.cpp",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\line_logger.cpp",
+              "RelativeDocumentMoniker": "src\\line_logger.cpp",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\line_logger.cpp",
+              "RelativeToolTip": "src\\line_logger.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-03-24T13:02:58.299Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "line_logger.h",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\line_logger.h",
+              "RelativeDocumentMoniker": "src\\line_logger.h",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\line_logger.h",
+              "RelativeToolTip": "src\\line_logger.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-03-24T13:02:51.051Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "config_loader.h",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\config_loader.h",
+              "RelativeDocumentMoniker": "src\\config_loader.h",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\config_loader.h",
+              "RelativeToolTip": "src\\config_loader.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-03-24T13:02:31.095Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "app.toml",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\config\\app.toml",
+              "RelativeDocumentMoniker": "config\\app.toml",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\config\\app.toml",
+              "RelativeToolTip": "config\\app.toml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-03-24T13:02:25.203Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "app_config.h",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\app_config.h",
+              "RelativeDocumentMoniker": "src\\app_config.h",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\app_config.h",
+              "RelativeToolTip": "src\\app_config.h",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAgwBwAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-03-24T13:02:28.818Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "app.cpp",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\app.cpp",
+              "RelativeDocumentMoniker": "src\\app.cpp",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\app.cpp",
+              "RelativeToolTip": "src\\app.cpp",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAgwDgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-03-24T12:56:52.962Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "app.h",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\app.h",
+              "RelativeDocumentMoniker": "src\\app.h",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\app.h",
+              "RelativeToolTip": "src\\app.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-03-24T12:56:13.073Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "config_loader.cpp",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\config_loader.cpp",
+              "RelativeDocumentMoniker": "src\\config_loader.cpp",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\config_loader.cpp",
+              "RelativeToolTip": "src\\config_loader.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-03-24T13:02:44.297Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "file_utils.h",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\file_utils.h",
+              "RelativeDocumentMoniker": "src\\file_utils.h",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\file_utils.h",
+              "RelativeToolTip": "src\\file_utils.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-03-24T13:02:46.169Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "line_assembler.cpp",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\line_assembler.cpp",
+              "RelativeDocumentMoniker": "src\\line_assembler.cpp",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\line_assembler.cpp",
+              "RelativeToolTip": "src\\line_assembler.cpp",
+              "ViewState": "AgIAACQAAAAAAAAAAABBwCUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-03-24T13:03:23.035Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "line_assembler.h",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\line_assembler.h",
+              "RelativeDocumentMoniker": "src\\line_assembler.h",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\line_assembler.h",
+              "RelativeToolTip": "src\\line_assembler.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-03-24T13:03:18.108Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "serial_port.cpp",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\serial_port.cpp",
+              "RelativeDocumentMoniker": "src\\serial_port.cpp",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\serial_port.cpp",
+              "RelativeToolTip": "src\\serial_port.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-03-24T13:03:14.452Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "serial_port.h",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\serial_port.h",
+              "RelativeDocumentMoniker": "src\\serial_port.h",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\src\\serial_port.h",
+              "RelativeToolTip": "src\\serial_port.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-03-24T13:03:02.045Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "CMakeLists.txt",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\CMakeLists.txt",
+              "RelativeDocumentMoniker": "CMakeLists.txt",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\CMakeLists.txt",
+              "RelativeToolTip": "CMakeLists.txt",
+              "ViewState": "AgIAABYAAAAAAAAAAAAUwEUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2026-03-24T12:54:03.157Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "usb-logger.h",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\usb-logger.h",
+              "RelativeDocumentMoniker": "usb-logger.h",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\usb-logger.h",
+              "RelativeToolTip": "usb-logger.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-03-24T12:52:50.43Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "usb-logger.cpp",
+              "DocumentMoniker": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\usb-logger.cpp",
+              "RelativeDocumentMoniker": "usb-logger.cpp",
+              "ToolTip": "C:\\Users\\Waldemar.Goncalves\\source\\repos\\usb-logger\\usb-logger.cpp",
+              "RelativeToolTip": "usb-logger.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-03-24T12:52:46.247Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "CMake Overview Pages",
+              "DocumentMoniker": "CMake Overview Pages",
+              "ToolTip": "CMake Overview Pages",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-03-24T12:49:37.213Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

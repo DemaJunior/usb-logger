@@ -1,0 +1,27 @@
+﻿# CMakeList.txt : CMake project for usb-logger, include source and define
+# project specific logic here.
+#
+cmake_minimum_required (VERSION 3.16)
+
+project ("usb-logger" LANGUAGES CXX)
+
+# Add source to this project's executable.
+add_executable(usb-logger
+  main.cpp
+  app.cpp
+  src/config_loader.cpp
+  src/file_utils.cpp
+  src/line_assembler.cpp
+  src/line_logger.cpp
+  src/serial_port.cpp
+)
+
+target_include_directories(usb-logger PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+target_compile_features(usb-logger PRIVATE cxx_std_20)
+
+if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+  target_compile_options(usb-logger PRIVATE -Wall -Wextra -Wpedantic)
+endif()

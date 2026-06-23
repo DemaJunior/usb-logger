@@ -1,0 +1,20 @@
+﻿#!/usr/bin/env bash
+
+set -euo pipefail
+
+APP_NAME="usb-logger"
+APP_DIR="/opt/usb-logger"
+
+if [[ $EUID -ne 0 ]]; then
+  echo "Run as root (sudo)." >&2
+  exit 1
+fi
+
+systemctl stop ${APP_NAME}.service || true
+systemctl disable ${APP_NAME}.service || true
+rm -f /etc/systemd/system/${APP_NAME}.service
+systemctl daemon-reload
+
+rm -rf "${APP_DIR}"
+
+echo "Uninstalled binary and systemd unit. App directory removed: ${APP_DIR}"

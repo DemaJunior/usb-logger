@@ -1,0 +1,28 @@
+﻿#include <cstdlib>
+#include <iostream>
+#include <string>
+
+#include "app.h"
+#include "config_loader.h"
+
+static std::string default_config_path() {
+    if (const char* env = std::getenv("USB_LOGGER_CONFIG")) {
+        if (*env) return std::string(env);
+    }
+    return "./app.toml";
+}
+
+int main(int argc, char** argv) {
+    std::string cfgPath = default_config_path();
+    if (argc >= 2) cfgPath = argv[1];
+
+    auto cfgOpt = ConfigLoader::load(cfgPath);
+    if (!cfgOpt) {
+        std::cerr << "Failed to load config: " << cfgPath << "\n";
+        std::cerr << "Tip: set USB_LOGGER_CONFIG or pass path as argv[1]\n";
+        return 2;
+    }
+
+    app application(*cfgOpt);
+    return application.run();
+}

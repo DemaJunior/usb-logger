@@ -1,0 +1,48 @@
+﻿#pragma once
+#ifndef APP_H
+#define APP_H
+
+/**
+ * @brief Main application class that manages sensor data reading and processing.
+ */
+class app {
+public:
+    /**
+     * @brief Constructs the application and registers default frame handlers.
+     */
+    app();
+
+    /**
+     * @brief Destroys the application and releases resources.
+     */
+    ~app();
+
+    /**
+     * @brief Starts the application and runs the main loop.
+     */
+    void run();
+
+private:
+    /**
+     * @brief Initializes the GPS provider using configuration settings.
+     * @return true if the GPS provider was initialized successfully.
+     */
+    bool setupGps();
+
+    /**
+     * @brief Executes the main processing loop.
+     */
+    void processLoop();
+
+    /**
+     * @brief Loads sensor configuration entries from the configuration file.
+     */
+    void loadConfig();
+
+    /**
+     * @brief Initializes and starts the serial readers for each configured sensor.
+     */
+    void startReaders();
+
+
+#endif

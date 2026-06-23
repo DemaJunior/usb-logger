@@ -1,0 +1,61 @@
+#include "app.h"
+
+#include <chrono>
+#include <thread>
+
+#include "line_assembler.h"
+#include "line_logger.h"
+#include "serial_port.h"
+
+app::app(AppConfig cfg) : cfg_(std::move(cfg)) {}
+
+app::~app() {
+    stop_.store(true);
+}
+
+int app::run() {
+    std::thread runThread([this]() { runLoop(); });
+    runThread.detach();
+    return runLoop();
+}
+
+
+
+
+int app::runLoop() {
+    LineLogger logger(cfg_.log);
+    LineAssembler assembler(static_cast<std::size_t>(cfg_.daemon.max_line_bytes));
+
+    for (;;) {
+        if (stop_.load()) return 0;
+
+        SerialPort sp;
+        while (!stop_.load() && !sp.open(cfg_.serial)) {
+            std::this_thread::sleep_for(std::chrono::seconds(cfg_.daemon.retry_port_interval_s));
+        }
+        if (stop_.load()) return 0;
+
+        for (;;) {
+            if (stop_.load()) return 0;
+
+            auto chunkOpt = sp.read_some(1024);
+            if (!chunkOpt.has_value()) {
+                continue;
+            }
+
+            const auto& chunk = *chunkOpt;
+            if (chunk.empty()) {
+                sp.close();
+                break;
+            }
+
+            for (auto& line : assembler.feed(chunk)) {
+                if (!logger.write_line(line)) {
+                    std::this_thread::sleep_for(std::chrono::seconds(cfg_.daemon.retry_error_interval_s));
+                }
+            }
+        }
+
+        std::this_thread::sleep_for(std::chrono::seconds(cfg_.daemon.retry_port_interval_s));
+    }
+}

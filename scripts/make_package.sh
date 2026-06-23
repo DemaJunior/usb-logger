@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+APP_NAME="usb-logger"
+PRESET="linux-release"
+OUT_DIR="dist"
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --preset) PRESET="$2"; shift 2;;
+    --out) OUT_DIR="$2"; shift 2;;
+    *) echo "Unknown arg: $1"; exit 2;;
+  esac
+done
+
+BIN_PATH="${ROOT_DIR}/out/build/${PRESET}/${APP_NAME}"
+if [[ ! -x "${BIN_PATH}" ]]; then
+  echo "Binary not found: ${BIN_PATH}" >&2
+  echo "Build first (or change --preset)." >&2
+  exit 3
+fi
+
+VERSION="0.1.0"
+if command -v git >/dev/null 2>&1; then
+  if git -C "${ROOT_DIR}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    VERSION="$(git -C "${ROOT_DIR}" describe --tags --always --dirty 2>/dev/null || echo "${VERSION}")"
+  fi
+fi
+
+PKG_ROOT="${ROOT_DIR}/${OUT_DIR}/${APP_NAME}-${VERSION}"
+rm -rf "${PKG_ROOT}"
+mkdir -p "${PKG_ROOT}/bin" "${PKG_ROOT}/config" "${PKG_ROOT}/scripts" "${PKG_ROOT}/systemd"
+
+install -m 0755 "${BIN_PATH}" "${PKG_ROOT}/bin/${APP_NAME}"
+install -m 0644 "${ROOT_DIR}/config/app.toml" "${PKG_ROOT}/config/app.toml"
+install -m 0755 "${ROOT_DIR}/scripts/install.sh" "${PKG_ROOT}/scripts/install.sh"
+install -m 0755 "${ROOT_DIR}/scripts/uninstall.sh" "${PKG_ROOT}/scripts/uninstall.sh"
+
+# Systemd file inside package is informational; install.sh generates the real one
+if [[ -f "${ROOT_DIR}/systemd/${APP_NAME}.service" ]]; then
+  install -m 0644 "${ROOT_DIR}/systemd/${APP_NAME}.service" "${PKG_ROOT}/systemd/${APP_NAME}.service"
+fi
+
+cat > "${PKG_ROOT}/README.txt" <<EOF
+${APP_NAME} installer package
+
+Install:
+  sudo ./scripts/install.sh --bin ./bin/${APP_NAME} --config ./config/app.toml
+
+Files installed by default under the current user's home:
+  ~/usb-logger/usb-logger
+  ~/usb-logger/app.toml
+  ~/usb-logger/log/
+
+Service:
+  systemctl status ${APP_NAME}
+  journalctl -u ${APP_NAME} -f
+EOF
+
+TAR_DIR="${ROOT_DIR}/${OUT_DIR}"
+mkdir -p "${TAR_DIR}"
+TAR_PATH="${TAR_DIR}/${APP_NAME}-${VERSION}.tar.gz"
+rm -f "${TAR_PATH}"
+
+tar -C "${TAR_DIR}" -czf "${TAR_PATH}" "${APP_NAME}-${VERSION}"
+
+echo "Created: ${TAR_PATH}"

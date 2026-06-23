@@ -1,0 +1,21 @@
+﻿# usb-logger configuration (TOML)
+
+[serial]
+port = "/dev/ttyUSB0"
+baudrate = 115200
+parity = "none"
+databits = 8
+stopbits = 1
+read_timeout_ms = 500
+
+[log]
+# Log directory relative to the application's working directory
+directory = "./log"
+base_name = "usb-logger"
+reopen_interval_s = 5
+flush_each_line = true
+
+[daemon]
+retry_port_interval_s = 2
+retry_error_interval_s = 2
+max_line_bytes = 4096

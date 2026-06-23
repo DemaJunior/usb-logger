@@ -1,0 +1,26 @@
+﻿#pragma once
+
+#include <functional>
+#include <stdexcept>
+#include <string>
+
+void register_test(const std::string& name, std::function<void()> fn);
+
+struct TestRegistrar {
+    TestRegistrar(const std::string& name, std::function<void()> fn) {
+        register_test(name, std::move(fn));
+    }
+};
+
+#define TEST_CASE(name) \
+    static void test_fn_##__LINE__(); \
+    static TestRegistrar test_reg_##__LINE__{name, test_fn_##__LINE__}; \
+    static void test_fn_##__LINE__()
+
+inline void test_require(bool cond, const char* expr, const char* file, int line) {
+    if (!cond) {
+        throw std::runtime_error(std::string(file) + ":" + std::to_string(line) + ": REQUIRE failed: " + expr);
+    }
+}
+
+#define REQUIRE(expr) test_require((expr), #expr, __FILE__, __LINE__)

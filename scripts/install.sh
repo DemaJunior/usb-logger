@@ -1,0 +1,113 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+APP_NAME="usb-logger"
+BIN_NAME="usb-logger"
+
+DEFAULT_USER_HOME="${SUDO_USER:-$USER}"
+DEFAULT_HOME_DIR="$(getent passwd "${DEFAULT_USER_HOME}" | cut -d: -f6)"
+APP_DIR="${DEFAULT_HOME_DIR:-$HOME}/${APP_NAME}"
+
+BIN_SRC=""
+CONFIG_SRC=""
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PKG_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --bin)
+      BIN_SRC="$2"; shift 2;;
+    --config)
+      CONFIG_SRC="$2"; shift 2;;
+    --dir)
+      APP_DIR="$2"; shift 2;;
+    *)
+      echo "Unknown argument: $1"; exit 2;;
+  esac
+done
+
+if [[ -z "${BIN_SRC}" ]]; then
+  if [[ -x "${PKG_ROOT}/bin/${BIN_NAME}" ]]; then
+    BIN_SRC="${PKG_ROOT}/bin/${BIN_NAME}"
+  elif [[ -x "${PKG_ROOT}/out/build/linux-release/${BIN_NAME}" ]]; then
+    BIN_SRC="${PKG_ROOT}/out/build/linux-release/${BIN_NAME}"
+  elif [[ -x "${PKG_ROOT}/out/build/linux-debug/${BIN_NAME}" ]]; then
+    BIN_SRC="${PKG_ROOT}/out/build/linux-debug/${BIN_NAME}"
+  elif [[ -x "${PKG_ROOT}/build/${BIN_NAME}" ]]; then
+    BIN_SRC="${PKG_ROOT}/build/${BIN_NAME}"
+  else
+    echo "Could not find built binary. Pass --bin <path-to-usb-logger>." >&2
+    exit 3
+  fi
+fi
+
+if [[ -z "${CONFIG_SRC}" ]]; then
+  if [[ -f "${PKG_ROOT}/config/app.toml" ]]; then
+    CONFIG_SRC="${PKG_ROOT}/config/app.toml"
+  else
+    echo "Could not find config/app.toml. Pass --config <path-to-app.toml>." >&2
+    exit 4
+  fi
+fi
+
+if [[ $EUID -ne 0 ]]; then
+  echo "Run as root (sudo)." >&2
+  exit 1
+fi
+
+install -d -m 0755 "${APP_DIR}"
+install -d -m 0755 "${APP_DIR}/log"
+
+install -m 0755 "${BIN_SRC}" "${APP_DIR}/${BIN_NAME}"
+
+if [[ ! -f "${APP_DIR}/app.toml" ]]; then
+  install -m 0644 "${CONFIG_SRC}" "${APP_DIR}/app.toml"
+else
+  echo "Config already exists at ${APP_DIR}/app.toml (not overwriting)."
+fi
+
+# Create user if missing (service uses this user)
+if ! id -u ${APP_NAME} >/dev/null 2>&1; then
+  useradd --system --no-create-home --shell /usr/sbin/nologin ${APP_NAME}
+fi
+
+# Ensure service user can execute binary and write logs.
+chown -R root:root "${APP_DIR}/${BIN_NAME}" || true
+chmod 0755 "${APP_DIR}/${BIN_NAME}" || true
+chown -R ${APP_NAME}:${APP_NAME} "${APP_DIR}/log"
+
+SERVICE_FILE="/etc/systemd/system/${APP_NAME}.service"
+cat > "${SERVICE_FILE}" <<EOF
+[Unit]
+Description=USB Serial Logger
+After=network.target
+
+[Service]
+Type=simple
+User=${APP_NAME}
+Group=${APP_NAME}
+WorkingDirectory=${APP_DIR}
+ExecStart=${APP_DIR}/${BIN_NAME} ${APP_DIR}/app.toml
+Restart=always
+RestartSec=2
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=${APP_DIR}/log
+SupplementaryGroups=dialout
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl daemon-reload
+systemctl enable ${APP_NAME}.service
+systemctl restart ${APP_NAME}.service
+
+systemctl --no-pager --full status ${APP_NAME}.service || true
+
+echo "Installed to ${APP_DIR}. Service: systemctl status ${APP_NAME}"

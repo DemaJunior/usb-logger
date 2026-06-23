@@ -1,0 +1,28 @@
+﻿#include "test_framework.h"
+#include "line_assembler.h"
+
+TEST_CASE("LineAssembler splits LF and trims CR") {
+    LineAssembler a(1024);
+    auto lines = a.feed("a\r\nb\n");
+    REQUIRE(lines.size() == 2);
+    REQUIRE(lines[0] == "a");
+    REQUIRE(lines[1] == "b");
+}
+
+TEST_CASE("LineAssembler accumulates across chunks") {
+    LineAssembler a(1024);
+    auto l1 = a.feed("hel");
+    REQUIRE(l1.empty());
+    auto l2 = a.feed("lo\nworld\n");
+    REQUIRE(l2.size() == 2);
+    REQUIRE(l2[0] == "hello");
+    REQUIRE(l2[1] == "world");
+}
+
+TEST_CASE("LineAssembler enforces max line bytes by keeping tail") {
+    LineAssembler a(5);
+    (void)a.feed("123456789");
+    auto lines = a.feed("0\n");
+    REQUIRE(lines.size() == 1);
+    REQUIRE(lines[0] == "67890");
+}

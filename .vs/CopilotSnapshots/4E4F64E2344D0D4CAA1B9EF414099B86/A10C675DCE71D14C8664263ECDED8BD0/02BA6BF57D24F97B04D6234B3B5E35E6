@@ -1,0 +1,55 @@
+﻿# CMakeList.txt : CMake project for usb-logger, include source and define
+# project specific logic here.
+#
+cmake_minimum_required (VERSION 3.16)
+
+project("usb-logger" LANGUAGES CXX)
+
+# Add source to this project's executable.
+add_executable(usb-logger
+  src/main.cpp
+  src/app.cpp
+  src/config_loader.cpp
+  src/file_utils.cpp
+  src/line_assembler.cpp
+  src/line_logger.cpp
+  src/serial_port.cpp
+)
+
+target_include_directories(usb-logger PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
+
+target_compile_features(usb-logger PRIVATE cxx_std_20)
+
+if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+  target_compile_options(usb-logger PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
+install(TARGETS usb-logger RUNTIME DESTINATION bin)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/config/app.toml DESTINATION share/usb-logger RENAME app.toml.example)
+
+include(CTest)
+if (BUILD_TESTING)
+  add_executable(usb-logger-tests
+    tests/test_main.cpp
+    tests/test_line_assembler.cpp
+    tests/test_config_loader.cpp
+
+    src/line_assembler.cpp
+    src/config_loader.cpp
+    src/file_utils.cpp
+  )
+
+  target_include_directories(usb-logger-tests PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+  )
+
+  target_compile_features(usb-logger-tests PRIVATE cxx_std_20)
+
+  if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    target_compile_options(usb-logger-tests PRIVATE -Wall -Wextra -Wpedantic)
+  endif()
+
+  add_test(NAME usb-logger.unit COMMAND usb-logger-tests)
+endif()

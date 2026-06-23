@@ -1,0 +1,72 @@
+﻿#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Creates a self-contained tar.gz package for installing on other Raspberry Pis
+# (same OS/arch). It bundles:
+#   - usb-logger binary
+#   - config/app.toml as default config
+#   - scripts/install.sh + uninstall.sh
+#   - systemd unit template
+#
+# Usage (run on the build machine for the target):
+#   ./scripts/make_package.sh [--preset linux-release] [--out dist]
+
+APP_NAME="usb-logger"
+PRESET="linux-release"
+OUT_DIR="dist"
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --preset) PRESET="$2"; shift 2;;
+    --out) OUT_DIR="$2"; shift 2;;
+    *) echo "Unknown arg: $1"; exit 2;;
+  esac
+done
+
+BIN_PATH="out/build/${PRESET}/${APP_NAME}"
+if [[ ! -x "${BIN_PATH}" ]]; then
+  echo "Binary not found: ${BIN_PATH}" >&2
+  echo "Build first (or change --preset)." >&2
+  exit 3
+fi
+
+VERSION="0.1.0"
+if command -v git >/dev/null 2>&1; then
+  if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    VERSION="$(git describe --tags --always --dirty 2>/dev/null || echo "${VERSION}")"
+  fi
+fi
+
+PKG_ROOT="${OUT_DIR}/${APP_NAME}-${VERSION}"
+rm -rf "${PKG_ROOT}"
+mkdir -p "${PKG_ROOT}/bin" "${PKG_ROOT}/config" "${PKG_ROOT}/scripts" "${PKG_ROOT}/systemd"
+
+install -m 0755 "${BIN_PATH}" "${PKG_ROOT}/bin/${APP_NAME}"
+install -m 0644 "config/app.toml" "${PKG_ROOT}/config/app.toml"
+install -m 0755 "scripts/install.sh" "${PKG_ROOT}/scripts/install.sh"
+install -m 0755 "scripts/uninstall.sh" "${PKG_ROOT}/scripts/uninstall.sh"
+install -m 0644 "systemd/usb-logger.service" "${PKG_ROOT}/systemd/usb-logger.service"
+
+cat > "${PKG_ROOT}/README.txt" <<EOF
+${APP_NAME} installer package
+
+Install:
+  sudo ./scripts/install.sh --bin ./bin/${APP_NAME} --config ./config/app.toml
+
+Service:
+  systemctl status ${APP_NAME}
+  journalctl -u ${APP_NAME} -f
+
+Notes:
+- Package is architecture specific. Use a package built on aarch64 for aarch64 targets.
+- Config is installed to /etc/${APP_NAME}/app.toml (not overwritten if exists).
+EOF
+
+mkdir -p "${OUT_DIR}"
+TAR_PATH="${OUT_DIR}/${APP_NAME}-${VERSION}.tar.gz"
+rm -f "${TAR_PATH}"
+
+tar -C "${OUT_DIR}" -czf "${TAR_PATH}" "${APP_NAME}-${VERSION}"
+
+echo "Created: ${TAR_PATH}"

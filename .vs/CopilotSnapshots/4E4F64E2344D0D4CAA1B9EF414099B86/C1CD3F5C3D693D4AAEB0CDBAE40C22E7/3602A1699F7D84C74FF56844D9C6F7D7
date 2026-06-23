@@ -1,0 +1,22 @@
+﻿[Unit]
+Description=USB Serial Logger
+After=network.target
+
+[Service]
+Type=simple
+User=usb-logger
+Group=usb-logger
+WorkingDirectory=/opt/usb-logger
+ExecStart=/opt/usb-logger/usb-logger /opt/usb-logger/app.toml
+Restart=always
+RestartSec=2
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/usb-logger/log
+SupplementaryGroups=dialout
+
+[Install]
+WantedBy=multi-user.target
