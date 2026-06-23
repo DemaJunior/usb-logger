@@ -1,37 +1,44 @@
 #include "csv_writer.h"
+
 #include <chrono>
+#include <filesystem>
 #include <iomanip>
 #include <sstream>
-#include <filesystem>
 
-CsvWriter::CsvWriter(const std::string& path) {
-    bool exists = std::filesystem::exists(path);
-    m_file.open(path, std::ios::app);
-    if (m_file.is_open() && !exists) {
-        m_file << kHeader;
-    }
+std::string CsvWriter::build_path(const LogConfig& cfg) {
+    return cfg.directory + "/" + cfg.base_name + ".csv";
+}
+
+CsvWriter::CsvWriter(const LogConfig& cfg)
+    : path_(build_path(cfg))
+{
+    std::filesystem::create_directories(cfg.directory);
+    const bool exists = std::filesystem::exists(path_);
+    file_.open(path_, std::ios::app);
+    if (file_.is_open() && !exists)
+        file_ << kHeader;
 }
 
 CsvWriter::~CsvWriter() {
-    if (m_file.is_open()) m_file.close();
+    if (file_.is_open()) file_.close();
 }
 
 void CsvWriter::write(const TelemetryRecord& rec) {
-    if (!m_file.is_open()) return;
-    m_file << current_timestamp() << ','
-           << rec.address << ','
-           << rec.voltage_V << ','
-           << rec.current_A << ','
-           << rec.energy_Wh << ','
-           << rec.temperature_C << '\n';
-    m_file.flush(); // ensure data is written even if process is killed
+    if (!file_.is_open()) return;
+    file_ << current_timestamp() << ','
+          << rec.address       << ','
+          << rec.voltage_V     << ','
+          << rec.current_A     << ','
+          << rec.energy_Wh     << ','
+          << rec.temperature_C << '\n';
+    if (file_.good()) file_.flush();
 }
 
-std::string CsvWriter::current_timestamp() const {
+std::string CsvWriter::current_timestamp() {
     using namespace std::chrono;
-    auto now = system_clock::now();
-    auto t   = system_clock::to_time_t(now);
-    auto ms  = duration_cast<milliseconds>(now.time_since_epoch()) % 1000;
+    const auto now = system_clock::now();
+    const auto t   = system_clock::to_time_t(now);
+    const auto ms  = duration_cast<milliseconds>(now.time_since_epoch()) % 1000;
     std::ostringstream ss;
     ss << std::put_time(std::localtime(&t), "%Y-%m-%d %H:%M:%S")
        << '.' << std::setw(3) << std::setfill('0') << ms.count();

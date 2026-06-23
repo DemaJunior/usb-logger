@@ -25,6 +25,10 @@ public:
     // - string with bytes read
     std::optional<std::string> read_some(std::size_t maxBytes);
 
+    // Writes `data` to the serial port.
+    // Returns true if all bytes were written successfully.
+    bool write_some(const std::string& data);
+
 private:
     int fd_{-1};
     int read_timeout_ms_{500};

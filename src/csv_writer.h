@@ -1,23 +1,29 @@
 #pragma once
 #include <fstream>
 #include <string>
+#include "app_config.h"
 #include "message_classifier.h"
 
 // Appends telemetry records to a CSV file.
-// Creates the file and writes the header if it does not exist.
+// Path is derived from LogConfig: <directory>/<base_name>.csv
+// Creates the file with a header row on first use.
 class CsvWriter {
 public:
-    explicit CsvWriter(const std::string& path);
+    explicit CsvWriter(const LogConfig& cfg);
     ~CsvWriter();
 
-    // Returns false if the file could not be opened.
-    bool is_open() const { return m_file.is_open(); }
+    bool is_open() const { return file_.is_open(); }
+    std::string path()  const { return path_; }
 
     void write(const TelemetryRecord& rec);
 
 private:
-    std::ofstream m_file;
+    std::string   path_;
+    std::ofstream file_;
+
     static constexpr const char* kHeader =
         "timestamp,address,voltage_V,current_A,energy_Wh,temperature_C\n";
-    std::string current_timestamp() const;
+
+    static std::string build_path(const LogConfig& cfg);
+    static std::string current_timestamp();
 };

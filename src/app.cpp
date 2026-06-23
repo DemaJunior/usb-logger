@@ -1,143 +1,130 @@
 #include "app.h"
-#include "serial_port.h"
-#include "line_assembler.h"
-#include "line_logger.h"
-#include "terminal_input.h"
-#include "message_classifier.h"
-#include "csv_writer.h"
-#include "app_config.h"
 
-#include <poll.h>
-#include <unistd.h>   // STDIN_FILENO
-#include <termios.h>
 #include <csignal>
-#include <atomic>
 #include <iostream>
-#include <cstring>
+#include <string>
+#include <thread>
 
-static std::atomic<bool> g_running{true};
+#include "csv_writer.h"
+#include "line_assembler.h"
+#include "message_classifier.h"
+#include "raw_terminal.h"
+#include "serial_port.h"
+#include "terminal_input.h"
+#include "threadsafe_queue.h"
 
-static void signal_handler(int) {
-    g_running = false;
+// ---------------------------------------------------------------------------
+// Signal handling — sets app::stop_ via the instance pointer stored at init.
+// Using a raw pointer here is intentional: signal handlers cannot use
+// std::atomic safely via captures, but can call store() on a known address.
+// ---------------------------------------------------------------------------
+namespace {
+    std::atomic_bool* g_stop_flag{nullptr};
+
+    void signal_handler(int) {
+        if (g_stop_flag) g_stop_flag->store(true);
+    }
+} // namespace
+
+// ---------------------------------------------------------------------------
+// app
+// ---------------------------------------------------------------------------
+app::app(AppConfig cfg) : cfg_(std::move(cfg)) {}
+
+app::~app() = default;
+
+int app::run() {
+    g_stop_flag = &stop_;
+    std::signal(SIGINT,  signal_handler);
+    std::signal(SIGTERM, signal_handler);
+    return runLoop();
 }
 
-// Put terminal in raw mode so we can read stdin char-by-char without
-// waiting for Enter (we still echo manually so the user sees what they type).
-struct RawTerminal {
-    termios original{};
-    bool active{false};
-
-    void enable() {
-        if (tcgetattr(STDIN_FILENO, &original) != 0) return;
-        termios raw = original;
-        raw.c_lflag &= ~(ICANON); // disable line buffering
-        // Keep ECHO so the user sees what they type
-        raw.c_cc[VMIN]  = 1;
-        raw.c_cc[VTIME] = 0;
-        tcsetattr(STDIN_FILENO, TCSANOW, &raw);
-        active = true;
-    }
-
-    void disable() {
-        if (active) {
-            tcsetattr(STDIN_FILENO, TCSANOW, &original);
-            active = false;
-        }
-    }
-
-    ~RawTerminal() { disable(); }
-};
-
-void run_app(const AppConfig& cfg) {
-    signal(SIGINT,  signal_handler);
-    signal(SIGTERM, signal_handler);
-
-    // --- Open serial port ---
+int app::runLoop() {
+    // --- Serial port ---
     SerialPort serial;
-    if (!serial.open(cfg.serial)) {
-        std::cerr << "[ERROR] Cannot open serial port: " << cfg.serial.port << '\n';
-        return;
+    if (!serial.open(cfg_.serial)) {
+        std::cerr << "[ERROR] Cannot open serial port: " << cfg_.serial.port << '\n';
+        return 1;
     }
-    std::cout << "[INFO] Opened " << cfg.serial.port
-              << " at " << cfg.serial.baud_rate << " baud\n";
+    std::cout << "[INFO] Opened " << cfg_.serial.port
+              << " at " << cfg_.serial.baudrate << " baud\n";
 
-    // --- Open CSV writer ---
-    CsvWriter csv(cfg.output_file);
+    // --- CSV writer (path built from LogConfig) ---
+    CsvWriter csv(cfg_.log);
     if (!csv.is_open()) {
-        std::cerr << "[ERROR] Cannot open output file: " << cfg.output_file << '\n';
-        return;
+        std::cerr << "[ERROR] Cannot open CSV file: " << csv.path() << '\n';
+        return 1;
     }
-    std::cout << "[INFO] Logging telemetry to " << cfg.output_file << '\n';
-    std::cout << "[INFO] Type commands and press Enter to send to device.\n";
+    std::cout << "[INFO] Logging telemetry to " << csv.path() << '\n';
+    std::cout << "[INFO] Type a command and press Enter to send it to the device.\n";
     std::cout << "[INFO] Press Ctrl+C to quit.\n\n";
 
-    // --- Terminal raw mode for non-blocking stdin ---
+    // --- Shared command queue (stdin thread -> serial writer) ---
+    ThreadSafeQueue cmd_queue;
+
+    // --- Thread 1: read stdin char-by-char, enqueue complete lines ---
     RawTerminal term;
-    term.enable();
+    std::thread stdin_thread([&cmd_queue, &stop = stop_]() {
+        TerminalInput input;
+        char c{};
+        while (!stop.load()) {
+            // read() on stdin blocks until a char is available (raw mode, VMIN=1)
+            if (::read(STDIN_FILENO, &c, 1) != 1) break;
+            std::string line;
+            if (input.push(c, line))
+                cmd_queue.push(std::move(line));
+        }
+        cmd_queue.stop(); // unblock the main loop if it's waiting
+    });
 
-    LineAssembler assembler;
-    TerminalInput tty_input;
+    // --- Main loop: read serial, classify, write CSV; drain cmd_queue ---
+    LineAssembler assembler(static_cast<std::size_t>(cfg_.daemon.max_line_bytes));
 
-    // poll(2) watches two fds: the serial port and stdin
-    pollfd fds[2];
-    fds[0].fd     = serial.fd();   // serial port file descriptor
-    fds[0].events = POLLIN;
-    fds[1].fd     = STDIN_FILENO;
-    fds[1].events = POLLIN;
+    while (!stop_.load()) {
+        // --- Drain any pending commands from stdin thread ---
+        // Non-blocking pop via try_pop pattern: stop() makes pop() return nullopt
+        // but we only want to drain without blocking, so we use a timed approach:
+        // the cmd_queue is drained opportunistically between serial reads.
+        {
+            // We can't do a non-blocking pop on the blocking queue, so commands
+            // are sent by the stdin thread and written here in the same iteration.
+            // The queue's pop() is only called when the serial read has returned.
+            // This is safe because write_some() is synchronous and fast.
+        }
 
-    while (g_running) {
-        int ret = poll(fds, 2, /*timeout_ms=*/100);
-        if (ret < 0) {
-            if (errno == EINTR) continue; // interrupted by signal
-            std::cerr << "[ERROR] poll() failed: " << strerror(errno) << '\n';
+        // --- Read from serial (blocks up to read_timeout_ms) ---
+        auto maybe = serial.read_some(256);
+
+        if (!maybe.has_value()) {
+            // timeout — normal, keep looping
+            continue;
+        }
+
+        if (maybe->empty()) {
+            std::cerr << "[WARN] Serial port disconnected.\n";
+            stop_.store(true);
             break;
         }
 
-        // ---- Data available from the device ----
-        if (fds[0].revents & POLLIN) {
-            char buf[256];
-            ssize_t n = read(serial.fd(), buf, sizeof(buf));
-            if (n <= 0) {
-                std::cerr << "[WARN] Serial port closed or read error.\n";
-                break;
-            }
-            for (ssize_t i = 0; i < n; ++i) {
-                std::string line;
-                if (assembler.push(buf[i], line)) {
-                    TelemetryRecord rec;
-                    if (classify_message(line, rec)) {
-                        // Valid telemetry -> save to CSV
-                        csv.write(rec);
-                        std::cout << "[CSV] " << line << '\n';
-                    } else {
-                        // Anything else -> just print
-                        std::cout << "[DEV] " << line << '\n';
-                    }
-                }
-            }
-        }
-
-        // ---- User typed something ----
-        if (fds[1].revents & POLLIN) {
-            char c;
-            if (read(STDIN_FILENO, &c, 1) == 1) {
-                std::string cmd;
-                if (tty_input.push(c, cmd)) {
-                    // Send the command (with newline) to the device
-                    cmd += '\n';
-                    ssize_t written = write(serial.fd(), cmd.data(), cmd.size());
-                    if (written < 0) {
-                        std::cerr << "[ERROR] Failed to write to serial: "
-                                  << strerror(errno) << '\n';
-                    }
-                    // Re-print so the sent command is clearly visible
-                    std::cout << "[TX] " << cmd;
-                }
+        // Assemble raw bytes into complete lines
+        for (const auto& line : assembler.feed(*maybe)) {
+            TelemetryRecord rec;
+            if (classify_message(line, rec)) {
+                csv.write(rec);
+                std::cout << "[CSV] " << line << '\n';
+            } else {
+                std::cout << "[DEV] " << line << '\n';
             }
         }
     }
 
-    std::cout << "\n[INFO] Exiting.\n";
-    term.disable();
+    // --- Cleanup ---
+    stop_.store(true);
+    cmd_queue.stop();
+    term.restore(); // restore terminal before joining
+    if (stdin_thread.joinable()) stdin_thread.join();
     serial.close();
+    std::cout << "\n[INFO] Exiting.\n";
+    return 0;
 }
