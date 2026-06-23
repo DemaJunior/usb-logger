@@ -27,7 +27,7 @@ target_sources(usb-logger PRIVATE
     scripts/uninstall.sh
     scripts/make_package.sh
     scripts/remote-reconfigure.sh
-    systemd/usb-logger.service
+    #systemd/usb-logger.service
 )
 
 target_include_directories(usb-logger PRIVATE
