@@ -1,4 +1,4 @@
-﻿# CMakeList.txt : CMake project for usb-logger, include source and define
+# CMakeList.txt : CMake project for usb-logger, include source and define
 # project specific logic here.
 #
 cmake_minimum_required (VERSION 3.16)
@@ -14,6 +14,8 @@ add_executable(usb-logger
   src/line_assembler.cpp
   src/line_logger.cpp
   src/serial_port.cpp
+  src/terminal_input.cpp
+  src/csv_writer.cpp
 )
 
 # Ensure VS/remote sync includes non-code assets (scripts/config/systemd)
