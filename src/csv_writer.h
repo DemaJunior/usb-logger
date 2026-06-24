@@ -15,7 +15,7 @@ public:
     bool is_open() const { return file_.is_open(); }
     std::string path()  const { return path_; }
 
-    void write(const TelemetryRecord& rec);
+    void write(const std::vector<std::string>& recs);
 
 private:
     std::string   path_;

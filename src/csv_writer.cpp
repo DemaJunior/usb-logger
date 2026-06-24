@@ -23,12 +23,13 @@ CsvWriter::~CsvWriter() {
     if (file_.is_open()) file_.close();
 }
 
-void CsvWriter::write(const TelemetryRecord& rec) {
+void CsvWriter::write(const std::vector<std::string>& recs) {
     if (!file_.is_open()) return;
-    file_ << current_timestamp() << ','
-          << rec.address       << ','
-          << rec.voltage_V     << ','
-          << rec.current_A     << ','
+    file_ << current_timestamp();
+    for (const auto& rec : recs) {
+        file_ << ',' << rec;
+    }
+    file_ << '\n';
           << rec.energy_Wh     << ','
           << rec.temperature_C << '\n';
     if (file_.good()) file_.flush();
