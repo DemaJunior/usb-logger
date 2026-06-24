@@ -30,8 +30,6 @@ void CsvWriter::write(const std::vector<std::string>& recs) {
         file_ << ',' << rec;
     }
     file_ << '\n';
-          << rec.energy_Wh     << ','
-          << rec.temperature_C << '\n';
     if (file_.good()) file_.flush();
 }
 
