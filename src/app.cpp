@@ -54,7 +54,7 @@ int app::runLoop() {
     // --- Shared command queue (stdin thread -> main loop) ---
     ThreadSafeQueue cmd_queue;
 
-    // --- Thread: read stdin char-by-char, enqueue complete lines ---
+    // --- Thread: read stdin char-by-char, enqueue complete lines with \n ---
     RawTerminal term;
     std::thread stdin_thread([&cmd_queue, &stop = stop_]() {
         TerminalInput input;
@@ -62,25 +62,32 @@ int app::runLoop() {
         while (!stop.load()) {
             if (::read(STDIN_FILENO, &c, 1) != 1) break;
             std::string line;
-            if (input.push(c, line))
+            if (input.push(c, line)) {
+                line += '\n'; // device protocol: every command ends with \n
                 cmd_queue.push(std::move(line));
+            }
         }
         cmd_queue.stop();
     });
 
-    // --- Main loop: read serial, classify, write CSV ---
+    // --- Main loop: read serial + drain and send pending commands ---
     LineAssembler assembler(static_cast<std::size_t>(cfg_.daemon.max_line_bytes));
-    std::cout << "[INFO] Starting reading log on file " << csv.path() << "...\n";
+
     while (!stop_.load()) {
-        // Drain pending commands from stdin thread and send to device
-        {
-            // ThreadSafeQueue::pop() blocks, so we use a non-blocking drain:
-            // commands are sent right after serial read returns (timeout or data).
+        // Drain all pending commands and send them to the device.
+        // try_pop() is non-blocking so this never stalls the serial read.
+        while (auto cmd = cmd_queue.try_pop()) {
+            if (serial.write_some(*cmd)) {
+                // Strip trailing \n for display only
+                std::cout << "[TX] " << cmd->substr(0, cmd->size() - 1) << '\n';
+            } else {
+                std::cerr << "[ERROR] Failed to send command to device.\n";
+            }
         }
 
         auto maybe = serial.read_some(256);
 
-        if (!maybe.has_value()) continue; // timeout, keep looping
+        if (!maybe.has_value()) continue; // read timeout, keep looping
 
         if (maybe->empty()) {
             std::cerr << "[WARN] Serial port disconnected.\n";
@@ -92,7 +99,7 @@ int app::runLoop() {
             std::vector<std::string> fields;
             if (classify_message(line, fields)) {
                 csv.write(fields);
-                //std::cout << "[CSV] " << line << '\n';
+                std::cout << "[CSV] " << line << '\n';
             } else {
                 std::cout << "[DEV] " << line << '\n';
             }

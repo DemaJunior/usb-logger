@@ -1,6 +1,6 @@
 #pragma once
 // Single-producer / single-consumer lock-based queue.
-// Used to pass commands from the stdin thread to the serial-writer.
+// Used to pass commands from the stdin thread to the main loop (serial writer).
 
 #include <condition_variable>
 #include <mutex>
@@ -18,11 +18,20 @@ public:
         cv_.notify_one();
     }
 
-    // Blocks until an item is available or stop() is called.
+    // Blocking pop: waits until an item is available or stop() is called.
     // Returns nullopt when stopped and queue is empty.
     std::optional<std::string> pop() {
         std::unique_lock lock{mutex_};
         cv_.wait(lock, [this]{ return !queue_.empty() || stopped_; });
+        if (queue_.empty()) return std::nullopt;
+        auto item = std::move(queue_.front());
+        queue_.pop();
+        return item;
+    }
+
+    // Non-blocking pop: returns immediately with nullopt if queue is empty.
+    std::optional<std::string> try_pop() {
+        std::lock_guard lock{mutex_};
         if (queue_.empty()) return std::nullopt;
         auto item = std::move(queue_.front());
         queue_.pop();
