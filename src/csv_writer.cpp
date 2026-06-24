@@ -13,22 +13,18 @@ CsvWriter::CsvWriter(const LogConfig& cfg)
     : path_(build_path(cfg))
 {
     std::filesystem::create_directories(cfg.directory);
-    const bool exists = std::filesystem::exists(path_);
     file_.open(path_, std::ios::app);
-    if (file_.is_open() && !exists)
-        file_ << kHeader;
 }
 
 CsvWriter::~CsvWriter() {
     if (file_.is_open()) file_.close();
 }
 
-void CsvWriter::write(const std::vector<std::string>& recs) {
-    if (!file_.is_open()) return;
+void CsvWriter::write(const std::vector<std::string>& fields) {
+    if (!file_.is_open() || fields.empty()) return;
     file_ << current_timestamp();
-    for (const auto& rec : recs) {
-        file_ << ',' << rec;
-    }
+    for (const auto& f : fields)
+        file_ << ',' << f;
     file_ << '\n';
     if (file_.good()) file_.flush();
 }

@@ -1,31 +1,18 @@
 #pragma once
+
 #include <string>
-#include <sstream>
-#include <regex>
+#include <vector>
 #include "utils.h"
 
-// Telemetry fields parsed from a valid device line.
-struct TelemetryRecord {
-    std::string address;
-    double voltage_V{};
-    double current_A{};
-    double energy_Wh{};
-    double temperature_C{};
-};
-
-// Returns true if `line` matches the format:
-//   <address>,<voltage_V>,<current_A>,<energy_Wh>,<temperature_C>
-// On success, fills `rec`.
-inline bool classify_message(const std::string& line, std::vector<std::string>& rec) {
-    // Regex: non-empty address, then 4 numeric fields (int or float, optional sign)
-
-    auto recs = utils::split_string(line, ',');
-
-    if (recs.size() < 5) return false;
-    try {
-        rec.insert(rec.end(), recs.begin(), recs.end());
-        return true;
-    } catch (...) {
-        return false;
-    }
+// Returns true if `line` is a valid telemetry line:
+//   <address>,<field1>,<field2>,...  (minimum 5 comma-separated fields)
+// The format <addr>,<V>,<A>,<Wh>,<T> is the baseline, but any line with
+// 5 or more fields is accepted and forwarded to the CSV as-is.
+// On success, fills `fields` with all parsed tokens.
+// On failure, `fields` is left unchanged.
+inline bool classify_message(const std::string& line, std::vector<std::string>& fields) {
+    auto tokens = utils::split_string(line, ',');
+    if (tokens.size() < 5) return false;
+    fields = std::move(tokens);
+    return true;
 }
