@@ -13,24 +13,19 @@ CsvWriter::CsvWriter(const LogConfig& cfg)
     : path_(build_path(cfg))
 {
     std::filesystem::create_directories(cfg.directory);
-    const bool exists = std::filesystem::exists(path_);
     file_.open(path_, std::ios::app);
-    if (file_.is_open() && !exists)
-        file_ << kHeader;
 }
 
 CsvWriter::~CsvWriter() {
     if (file_.is_open()) file_.close();
 }
 
-void CsvWriter::write(const TelemetryRecord& rec) {
-    if (!file_.is_open()) return;
-    file_ << current_timestamp() << ','
-          << rec.address         << ','
-          << rec.voltage_V       << ','
-          << rec.current_A       << ','
-          << rec.energy_Wh       << ','
-          << rec.temperature_C   << '\n';
+void CsvWriter::write(const std::vector<std::string>& fields) {
+    if (!file_.is_open() || fields.empty()) return;
+    file_ << current_timestamp();
+    for (const auto& f : fields)
+        file_ << ',' << f;
+    file_ << '\n';
     if (file_.good()) file_.flush();
 }
 

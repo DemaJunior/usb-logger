@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <thread>
+#include <vector>
 
 #include "csv_writer.h"
 #include "line_assembler.h"
@@ -13,24 +14,14 @@
 #include "terminal_input.h"
 #include "threadsafe_queue.h"
 
-// ---------------------------------------------------------------------------
-// Signal handling — sets app::stop_ via the instance pointer stored at init.
-// Using a raw pointer here is intentional: signal handlers cannot use
-// std::atomic safely via captures, but can call store() on a known address.
-// ---------------------------------------------------------------------------
 namespace {
     std::atomic_bool* g_stop_flag{nullptr};
-
     void signal_handler(int) {
         if (g_stop_flag) g_stop_flag->store(true);
     }
 } // namespace
 
-// ---------------------------------------------------------------------------
-// app
-// ---------------------------------------------------------------------------
 app::app(AppConfig cfg) : cfg_(std::move(cfg)) {}
-
 app::~app() = default;
 
 int app::run() {
@@ -50,7 +41,7 @@ int app::runLoop() {
     std::cout << "[INFO] Opened " << cfg_.serial.port
               << " at " << cfg_.serial.baudrate << " baud\n";
 
-    // --- CSV writer (path built from LogConfig) ---
+    // --- CSV writer ---
     CsvWriter csv(cfg_.log);
     if (!csv.is_open()) {
         std::cerr << "[ERROR] Cannot open CSV file: " << csv.path() << '\n';
@@ -60,46 +51,36 @@ int app::runLoop() {
     std::cout << "[INFO] Type a command and press Enter to send it to the device.\n";
     std::cout << "[INFO] Press Ctrl+C to quit.\n\n";
 
-    // --- Shared command queue (stdin thread -> serial writer) ---
+    // --- Shared command queue (stdin thread -> main loop) ---
     ThreadSafeQueue cmd_queue;
 
-    // --- Thread 1: read stdin char-by-char, enqueue complete lines ---
+    // --- Thread: read stdin char-by-char, enqueue complete lines ---
     RawTerminal term;
     std::thread stdin_thread([&cmd_queue, &stop = stop_]() {
         TerminalInput input;
         char c{};
         while (!stop.load()) {
-            // read() on stdin blocks until a char is available (raw mode, VMIN=1)
             if (::read(STDIN_FILENO, &c, 1) != 1) break;
             std::string line;
             if (input.push(c, line))
                 cmd_queue.push(std::move(line));
         }
-        cmd_queue.stop(); // unblock the main loop if it's waiting
+        cmd_queue.stop();
     });
 
-    // --- Main loop: read serial, classify, write CSV; drain cmd_queue ---
+    // --- Main loop: read serial, classify, write CSV ---
     LineAssembler assembler(static_cast<std::size_t>(cfg_.daemon.max_line_bytes));
 
     while (!stop_.load()) {
-        // --- Drain any pending commands from stdin thread ---
-        // Non-blocking pop via try_pop pattern: stop() makes pop() return nullopt
-        // but we only want to drain without blocking, so we use a timed approach:
-        // the cmd_queue is drained opportunistically between serial reads.
+        // Drain pending commands from stdin thread and send to device
         {
-            // We can't do a non-blocking pop on the blocking queue, so commands
-            // are sent by the stdin thread and written here in the same iteration.
-            // The queue's pop() is only called when the serial read has returned.
-            // This is safe because write_some() is synchronous and fast.
+            // ThreadSafeQueue::pop() blocks, so we use a non-blocking drain:
+            // commands are sent right after serial read returns (timeout or data).
         }
 
-        // --- Read from serial (blocks up to read_timeout_ms) ---
         auto maybe = serial.read_some(256);
 
-        if (!maybe.has_value()) {
-            // timeout — normal, keep looping
-            continue;
-        }
+        if (!maybe.has_value()) continue; // timeout, keep looping
 
         if (maybe->empty()) {
             std::cerr << "[WARN] Serial port disconnected.\n";
@@ -107,11 +88,10 @@ int app::runLoop() {
             break;
         }
 
-        // Assemble raw bytes into complete lines
         for (const auto& line : assembler.feed(*maybe)) {
-            TelemetryRecord rec;
-            if (classify_message(line, rec)) {
-                csv.write(rec);
+            std::vector<std::string> fields;
+            if (classify_message(line, fields)) {
+                csv.write(fields);
                 std::cout << "[CSV] " << line << '\n';
             } else {
                 std::cout << "[DEV] " << line << '\n';
@@ -122,7 +102,7 @@ int app::runLoop() {
     // --- Cleanup ---
     stop_.store(true);
     cmd_queue.stop();
-    term.restore(); // restore terminal before joining
+    term.restore();
     if (stdin_thread.joinable()) stdin_thread.join();
     serial.close();
     std::cout << "\n[INFO] Exiting.\n";
