@@ -80,7 +80,7 @@ int app::runLoop() {
 
     // --- Main loop: read serial, classify, write CSV; drain cmd_queue ---
     LineAssembler assembler(static_cast<std::size_t>(cfg_.daemon.max_line_bytes));
-
+    std::cout << "[INFO] Starting reading log on file descriptor " << serial.fd() << "...\n";
     while (!stop_.load()) {
         // --- Drain any pending commands from stdin thread ---
         // Non-blocking pop via try_pop pattern: stop() makes pop() return nullopt
