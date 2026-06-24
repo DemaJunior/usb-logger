@@ -1,6 +1,8 @@
 #pragma once
+
 #include <fstream>
 #include <string>
+
 #include "app_config.h"
 #include "message_classifier.h"
 
@@ -12,10 +14,10 @@ public:
     explicit CsvWriter(const LogConfig& cfg);
     ~CsvWriter();
 
-    bool is_open() const { return file_.is_open(); }
-    std::string path()  const { return path_; }
+    bool        is_open() const { return file_.is_open(); }
+    std::string path()    const { return path_; }
 
-    void write(const std::vector<std::string>& recs);
+    void write(const TelemetryRecord& rec);
 
 private:
     std::string   path_;
