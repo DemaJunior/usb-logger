@@ -99,7 +99,7 @@ int app::runLoop() {
             std::vector<std::string> fields;
             if (classify_message(line, fields)) {
                 csv.write(fields);
-                std::cout << "[CSV] " << line << '\n';
+                //std::cout << "[CSV] " << line << '\n';
             } else {
                 std::cout << "[DEV] " << line << '\n';
             }
