@@ -70,7 +70,7 @@ int app::runLoop() {
 
     // --- Main loop: read serial, classify, write CSV ---
     LineAssembler assembler(static_cast<std::size_t>(cfg_.daemon.max_line_bytes));
-    std::cout << "[INFO] Starting reading log on file descriptor " << serial.fd() << "...\n";
+    std::cout << "[INFO] Starting reading log on file " << csv.path() << "...\n";
     while (!stop_.load()) {
         // Drain pending commands from stdin thread and send to device
         {
