@@ -26,4 +26,5 @@ private:
 
     static std::string build_path(const LogConfig& cfg);
     static std::string current_timestamp();
+    static std::string current_timestamp_for_filename();
 };
