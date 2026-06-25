@@ -4,10 +4,11 @@
 #include <filesystem>
 #include <iomanip>
 #include <sstream>
-#include <format>
+#include <iomanip>
+#include <ctime>
 
 std::string CsvWriter::build_path(const LogConfig& cfg) {
-    return cfg.directory + "/" + cfg.base_name + current_timestamp() + ".csv";
+    return cfg.directory + "/" + cfg.base_name + current_timestamp_for_filename() + ".csv";
 }
 
 CsvWriter::CsvWriter(const LogConfig& cfg)
@@ -42,7 +43,23 @@ std::string CsvWriter::current_timestamp() {
 }
 
 std::string CsvWriter::current_timestamp_for_filename() {
-    auto agora = std::chrono::system_clock::now();
-    // Formata diretamente sem precisar converter para tm estruturado
-    return std::format("{:%Y%m%d_%H%M}", agora);
+    using namespace std::chrono;
+    
+    // Captura o tempo atual de alta precisão
+    const auto now = system_clock::now();
+    const auto t   = system_clock::to_time_t(now);
+    
+    // Extrai os milissegundos isolados da fração de segundo atual
+    const auto ms  = duration_cast<milliseconds>(now.time_since_epoch()) % 1000;
+    
+    // Buffer local seguro para threads no Linux (localtime_r)
+    std::tm buf;
+    localtime_r(&t, &buf);
+
+    std::ostringstream ss;
+    // O formato %Y%m%d_%H%M%S gera: 20260625_135040 (Sem espaços ou dois-pontos)
+    ss << std::put_time(&buf, "%Y%m%d_%H%M%S")
+       << '.' << std::setw(3) << std::setfill('0') << ms.count();
+       
+    return ss.str();
 }
