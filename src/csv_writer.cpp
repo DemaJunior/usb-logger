@@ -6,7 +6,7 @@
 #include <sstream>
 
 std::string CsvWriter::build_path(const LogConfig& cfg) {
-    return cfg.directory + "/" + cfg.base_name + ".csv";
+    return cfg.directory + "/" + cfg.base_name + current_timestamp() + ".csv";
 }
 
 CsvWriter::CsvWriter(const LogConfig& cfg)

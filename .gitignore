@@ -7,3 +7,5 @@ out/build/linux-debug/CMakeCache.txt
 out/build/linux-debug/.cmake/api/v1/query/client-vscode/query.json
 out/build/linux-debug/CMakeFiles/CMakeConfigureLog.yaml
 out/build/linux-debug/CMakeFiles/4.3.1-msvc1/CMakeSystem.cmake
+out/build/linux-debug/.cmake/api/v1/reply/error-2026-06-25T17-46-56-0930.json
+out/build/linux-debug/.cmake/api/v1/reply/error-2026-06-25T17-46-57-0299.json
