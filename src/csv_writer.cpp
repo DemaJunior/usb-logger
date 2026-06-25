@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <iomanip>
 #include <sstream>
+#include <format>
 
 std::string CsvWriter::build_path(const LogConfig& cfg) {
     return cfg.directory + "/" + cfg.base_name + current_timestamp() + ".csv";
@@ -41,16 +42,7 @@ std::string CsvWriter::current_timestamp() {
 }
 
 std::string CsvWriter::current_timestamp_for_filename() {
-    using namespace std::chrono;
-    const auto now = system_clock::now();
-    const auto t   = system_clock::to_time_t(now);
-    const auto ms  = duration_cast<milliseconds>(now.time_since_epoch()) % 1000;
-    
-    std::tm buf; // Cria um buffer local na pilha da thread atual
-    localtime_r(&t, &buf); // Versão segura para Linux/POSIX
-
-    std::ostringstream ss;
-    ss << std::put_time(&buf, "%Y-%m-%d_%H-%M-%S") // Usa o buffer seguro
-       << '.' << std::setw(3) << std::setfill('0') << ms.count();
-    return ss.str();
+    auto agora = std::chrono::system_clock::now();
+    // Formata diretamente sem precisar converter para tm estruturado
+    return std::format("{:%Y%m%d_%H%M}", agora);
 }
